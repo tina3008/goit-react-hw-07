@@ -15,4 +15,26 @@ axios.defaults.baseURL = "https://66670073a2f8516ff7a5dfd7.mockapi.io";
    }
  );
 
-// export default fetchContacts;
+export const addContact = createAsyncThunk(
+  "contacts/addContact",
+  async ({ newContact }, thunkAPI) => {
+    try {
+      const response = await axios.post("/contacts", { newContact });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteContact = createAsyncThunk(
+  "contacts/deleteContact",
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.delete(`/contacts/${id}`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
